@@ -1,6 +1,9 @@
 import React from "react";
 import "./sidebar.css";
 import { FcDatabase } from "react-icons/fc";
+import { FcBrokenLink } from "react-icons/fc";
+import { FcStart } from "react-icons/fc";
+
 
 export const Sidebar = () => {
     const onDragStart = (event, nodeType) => {
@@ -16,22 +19,24 @@ export const Sidebar = () => {
             </div>
             <div
                 className="dndnode"
+                onDragStart={event => onDragStart(event, "trigger")}
+                draggable>
+                <FcStart color="#0DCAF0" size="20px" />
+                <span className="ms-1">Trigger</span>
+            </div>
+            <div
+                className="dndnode"
                 onDragStart={event => onDragStart(event, "buttons")}
                 draggable>
                 <FcDatabase color="#0DCAF0" size="20px" />
-                <span className="ms-1">Botones</span>
+                <span className="ms-1">Buttons</span>
             </div>
             <div
                 className="dndnode"
-                onDragStart={event => onDragStart(event, "default")}
+                onDragStart={event => onDragStart(event, "request")}
                 draggable>
-                Default Node
-            </div>
-            <div
-                className="dndnode"
-                onDragStart={event => onDragStart(event, "output")}
-                draggable>
-                Output Node
+                <FcBrokenLink size="20px" />
+                <span className="ms-1">Request</span>
             </div>
         </aside>
     );

@@ -3,7 +3,7 @@ import { FcStart } from "react-icons/fc";
 import { Handle, useReactFlow, useStoreApi, Position } from "reactflow";
 import { v4 as uuidv4 } from "uuid";
 
-const StepInitial = ({ id, data }) => {
+const Trigger = ({ id, data }) => {
     const { setNodes } = useReactFlow();
     const store = useStoreApi();
     const { nodeInternals } = store.getState();
@@ -30,7 +30,7 @@ const StepInitial = ({ id, data }) => {
                     node.data = {
                         inputs: {
                             ...node.data.inputs,
-                            [idData]: "Title Buttom",
+                            [idData]: "Message...",
                         },
                     };
                 }
@@ -59,7 +59,7 @@ const StepInitial = ({ id, data }) => {
         <>
             <div className="custom-node__header">
                 <FcStart color="#0DCAF0" size="20px" />
-                <span className="ms-1">Step Initial</span>
+                <span className="ms-1">Trigger</span>
             </div>
             <div className="custom-node__body">
                 <div className="tags-input-container">
@@ -104,4 +104,4 @@ const StepInitial = ({ id, data }) => {
     );
 };
 
-export default memo(StepInitial);
+export default memo(Trigger);

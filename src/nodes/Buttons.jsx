@@ -48,6 +48,7 @@ function Buttons({ id, data }) {
                 <span className="ms-1">Botones</span>
             </div>
             <div className="custom-node__body">
+                <Handle type="target" position={Position.Left} />
                 {Object.keys(data.inputs).map(index => (
                     <div key={index} className="custom-node__select">
                         <input

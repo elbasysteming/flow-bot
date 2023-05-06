@@ -26,7 +26,7 @@ ul {
     border-radius: 4px;
 }
 
-.react-flow__node-postman {
+.react-flow__node-request {
     font-size: 10px;
     width: 350px;
     background: #ffffff;
@@ -132,4 +132,8 @@ ul {
     padding-left: 3px;
     border: none;
     outline: none;
+}
+
+.react-flow__handle-bottom {
+    left: 100%;
 }

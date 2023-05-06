@@ -5,6 +5,7 @@ import ReactFlow, {
     MiniMap,
     Controls,
     Background,
+    useStoreApi,
     useNodesState,
     useEdgesState,
     ReactFlowProvider,
@@ -17,8 +18,8 @@ import {
 
 //nodes
 import Buttons from "./nodes/Buttons";
-import PostmanNode from "./nodes/postman/index";
-import StepInitial from "./nodes/StepInitial";
+import RequestNode from "./nodes/request/index";
+import Trigger from "./nodes/Trigger";
 
 import "reactflow/dist/style.css";
 import "./overview.css";
@@ -27,8 +28,8 @@ import { Sidebar } from "./components/Sidebar";
 
 const nodeTypes = {
     buttons: Buttons,
-    stepInitial: StepInitial,
-    postman: PostmanNode,
+    trigger: Trigger,
+    request: RequestNode,
 };
 
 const minimapStyle = {
@@ -36,6 +37,8 @@ const minimapStyle = {
 };
 
 const App = () => {
+
+
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -47,6 +50,8 @@ const App = () => {
         params => setEdges(eds => addEdge(params, eds)),
         []
     );
+
+
 
     const edgesWithUpdatedTypes = edges.map(edge => {
         if (edge.sourceHandle) {
@@ -81,8 +86,6 @@ const App = () => {
                 y: event.clientY - reactFlowBounds.top,
             });
 
-            console.log(type);
-
             const newNode = {
                 ...nodes,
                 id: getId(),
@@ -96,9 +99,13 @@ const App = () => {
             };
 
             setNodes(nds => nds.concat(newNode));
+
+            console.log(reactFlowInstance.getNodes());
+
         },
         [reactFlowInstance]
     );
+
 
     return (
         <div className="dndflow">
@@ -117,8 +124,8 @@ const App = () => {
                         onInit={setReactFlowInstance}
                         onDrop={onDrop}
                         onDragOver={onDragOver}
-                        minZoom={0.2}
-                        maxZoom={1.2}
+                        minZoom={0.5}
+                        maxZoom={1.1}
                         fitView
                         attributionPosition="top-right"
                         nodeTypes={nodeTypes}>
