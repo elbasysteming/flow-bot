@@ -19,8 +19,20 @@
 .dndflow .dndnode {
     height: 60px;
     font-size: 16px;
+    border-radius: 8px;
     padding: 4px;
     border: 1px solid #ced4da;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+}
+
+.center {
+    height: 60px;
+    font-size: 16px;
+    padding: 4px;
     border-radius: 2px;
     margin-bottom: 10px;
     display: flex;
@@ -46,5 +58,6 @@
     .dndflow aside {
         width: 20%;
         max-width: 250px;
+        padding: 20px;
     }
 }

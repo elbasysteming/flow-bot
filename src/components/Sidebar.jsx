@@ -1,21 +1,31 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "./sidebar.css";
 import { FcDatabase } from "react-icons/fc";
 import { FcBrokenLink } from "react-icons/fc";
 import { FcStart } from "react-icons/fc";
 
-
 export const Sidebar = () => {
+    const flow = useSelector(state => state.flow);
+
     const onDragStart = (event, nodeType) => {
         event.dataTransfer.setData("application/reactflow", nodeType);
         event.dataTransfer.effectAllowed = "move";
     };
 
+    const onHandleSaveFlow = () => {
+        console.log(flow);
+    };
+
     return (
         <aside>
-            <div className="description">
-                {/*You can drag these nodes to the pane on the right.*/}
-                Puede arrastrar estos nodos al panel de la derecha.
+            <div className="d-grid gap-2 col-12 mx-auto mb-4">
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={onHandleSaveFlow}>
+                    Guardar flujo
+                </button>
             </div>
             <div
                 className="dndnode"
@@ -37,6 +47,9 @@ export const Sidebar = () => {
                 draggable>
                 <FcBrokenLink size="20px" />
                 <span className="ms-1">Request</span>
+            </div>
+            <div className="description">
+                Puede arrastrar estos nodos al panel de la derecha.
             </div>
         </aside>
     );

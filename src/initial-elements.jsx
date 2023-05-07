@@ -5,18 +5,10 @@ export const nodes = [
         position: { x: -700, y: 30 },
         data: {
             inputs: {
-                '123': "Title Button",
+                123: "Message",
             },
         },
     },
-    /*{
-        id: "2",
-        type: "postman",
-        position: { x: -50, y: 50 },
-        data: {}
-    },*/
 ];
 
-export const edges = [
-
-];
+export const edges = [];

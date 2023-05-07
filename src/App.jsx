@@ -1,29 +1,25 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateFlow /*, resetFlow */ } from "./features/flow/flowSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ReactFlow, {
     addEdge,
     MiniMap,
     Controls,
     Background,
-    useStoreApi,
     useNodesState,
     useEdgesState,
     ReactFlowProvider,
 } from "reactflow";
-
 import {
     nodes as initialNodes,
     edges as initialEdges,
 } from "./initial-elements";
-
-//nodes
 import Buttons from "./nodes/Buttons";
 import RequestNode from "./nodes/request/index";
 import Trigger from "./nodes/Trigger";
-
 import "reactflow/dist/style.css";
 import "./overview.css";
-
 import { Sidebar } from "./components/Sidebar";
 
 const nodeTypes = {
@@ -37,21 +33,34 @@ const minimapStyle = {
 };
 
 const App = () => {
-
-
     const reactFlowWrapper = useRef(null);
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     let id = 0;
     const getId = () => `dndnode_${id++}`;
+    const dispatch = useDispatch();
 
     const onConnect = useCallback(
         params => setEdges(eds => addEdge(params, eds)),
         []
     );
+    useEffect(() => {
+        dispatch(updateFlow({ nodes: [], edges: [] }));
+    }, []);
 
-
+    useEffect(() => {
+        if (reactFlowInstance) {
+            dispatch(
+                updateFlow({
+                    nodes: reactFlowInstance.getNodes(),
+                    edges: reactFlowInstance.getEdges(),
+                })
+            );
+            /*console.log("Nodos", reactFlowInstance.getNodes());
+            console.log("Conexiones", reactFlowInstance.getEdges());*/
+        }
+    }, [nodes, edges]);
 
     const edgesWithUpdatedTypes = edges.map(edge => {
         if (edge.sourceHandle) {
@@ -59,7 +68,6 @@ const App = () => {
                 .inputs[edge.sourceHandle];
             edge.type = edgeType;
         }
-
         return edge;
     });
 
@@ -71,7 +79,6 @@ const App = () => {
     const onDrop = useCallback(
         event => {
             event.preventDefault();
-
             const reactFlowBounds =
                 reactFlowWrapper.current.getBoundingClientRect();
             const type = event.dataTransfer.getData("application/reactflow");
@@ -99,13 +106,9 @@ const App = () => {
             };
 
             setNodes(nds => nds.concat(newNode));
-
-            console.log(reactFlowInstance.getNodes());
-
         },
         [reactFlowInstance]
     );
-
 
     return (
         <div className="dndflow">
